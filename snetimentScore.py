@@ -9,7 +9,7 @@ fullStop = "।"
 
 """"""
 
-scoreWord = 0
+
 
 
 """Load Positive Dataset """
@@ -35,7 +35,9 @@ sheet.cell_value(0, 0)
 sentence = ""
 listOfSentence = []
 
-
+scoreWord = 1
+scoreNegaWordCount = 0
+scoreNegCount = "N/F"
 
 for i in range(1, 5):
     data = sheet.cell_value(i, 1)
@@ -57,13 +59,19 @@ for i in range(1, 5):
 
         for l in range(0, len(tokenizePostagger1)):
             if tokenizePostagger1[l][1] != 'pron':
-                #check in positive dataset
-                score = functionPython.LoadPositiveData(listOfPositiveWord, listOfNegativeWord, tokenizePostagger1[l][0])
-                #print(tokenizePostagger1[l][0])
-                scoreWord = scoreWord + score
+                #check in positive negative dataset
+                score = functionPython.LoadPositiveNegativeData(listOfPositiveWord, listOfNegativeWord, tokenizePostagger1[l][0])
+                if score == -999:
+                    scoreNegCount = functionPython.CountNegativeData(listOfNegWord, tokenizePostagger1[l][0])
+                    if scoreNegCount == "True":
+                        scoreNegaWordCount = scoreNegaWordCount + 1
 
-        print(scoreWord)
-        scoreWord = 0
+                else:
+                    scoreWord = scoreWord * score
+        print("Neg count: " + str(scoreNegaWordCount))
+        print("Result score: "+str(scoreWord))
+        scoreWord = 1
+    scoreNegaWordCount = 0
     listOfSentence = []
 
 

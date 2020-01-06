@@ -25,9 +25,10 @@ def LoadData(dataParameter):
     return listOfWord
 
 # Function definition is here
-def LoadPositiveData(listOfPositiveWord, listOfNegativeWord, findWord):
+def LoadPositiveNegativeData(listOfPositiveWord, listOfNegativeWord, findWord):
 
     score = 0
+    count = 0
     # find a word
     #find = findWord
     flag = ""
@@ -35,19 +36,40 @@ def LoadPositiveData(listOfPositiveWord, listOfNegativeWord, findWord):
         if listOfPositiveWord[i] == findWord:
             flag = "true"
             score = 1
-            print("Positive Word: "+findWord)
+            print("++++++ Word: "+findWord)
             break
         else:
-            flag = "false"
-    if flag == "false":
+            flag = "N/F"
+    if flag == "N/F":
         for i in range(0, len(listOfNegativeWord)):
             if listOfNegativeWord[i] == findWord:
                 flag = "true"
                 score = -1
-                print("Negative Word: "+ findWord)
+                print("------- Word: "+ findWord)
                 break
             else:
-                flag = "false"
+                flag = "N/F"
+
+    if flag == "N/F":
+        score = -999
 
     return score
+
+
+def CountNegativeData(listOfNegWord, findWord):
+
+    count = 0
+    flag = ""
+
+    for i in range(0, len(listOfNegWord)):
+        if listOfNegWord[i] == findWord:
+            flag = "True"
+            count = count +1
+            print("-Counted Negative - Word: " + str(count))
+            break
+        else:
+            flag = "N/F"
+
+    return flag
+
 
