@@ -12,7 +12,7 @@ t = Tokenizers()
 punctuation = "!"
 fullStop = "।"
 
-with open('data/CCD-CCS/ptest.txt', encoding="utf8") as myfile:
+with open('data/Adjective-Adverb/minimal-degree-adverb.txt', encoding="utf8") as myfile:
   data = myfile.read()
 myfile.close()
 #print(data)

@@ -1,4 +1,8 @@
+import xlrd
+
+
 # Function definition is here
+
 def LoadData(dataParameter):
 
     with open(dataParameter, encoding="utf8") as myfile:
@@ -64,7 +68,7 @@ def CountNegativeData(listOfNegWord, findWord):
     for i in range(0, len(listOfNegWord)):
         if listOfNegWord[i] == findWord:
             flag = "True"
-            count = count +1
+            count = count+1
             print("-Counted Negative - Word: " + str(count))
             break
         else:
@@ -72,4 +76,67 @@ def CountNegativeData(listOfNegWord, findWord):
 
     return flag
 
+# Function definition is here
+def LoadExcle(dataParameter):
+    wb = xlrd.open_workbook(dataParameter)
+    sheet = wb.sheet_by_index(0)
 
+    sheet.cell_value(0, 0)
+
+    listOfWord = []
+
+    for i in range(sheet.nrows):
+        data = sheet.cell_value(i, 0)
+        listOfWord.append(data)
+        # for j in range(0, len(data)):
+
+    #print(listOfWord)
+
+    return listOfWord
+
+
+def cCDcCSData(listOfcCDcCSWord, findWord):
+    flag = ""
+    wb = xlrd.open_workbook("data/CCD-CCS/CCID.xlsx")
+    sheet = wb.sheet_by_index(0)
+    value = 0
+    for i in range(0, len(listOfcCDcCSWord)):
+        if listOfcCDcCSWord[i] == findWord:
+            flag = "True"
+            print("CCD-CCS word:"+findWord)
+            break
+        else:
+            flag = "N/F"
+
+    if flag == "True":
+        for i in range(sheet.nrows):
+            if findWord == sheet.cell_value(i, 0):
+                print(sheet.cell_value(i, 1))
+                value = sheet.cell_value(i, 1)
+    else:
+        value = 0
+
+    return value
+
+def JJJQData(listOfcCDcCSWord, findWord):
+    flag = ""
+    wb = xlrd.open_workbook("data/CCD-CCS/CCID.xlsx")
+    sheet = wb.sheet_by_index(0)
+    value = 0
+    for i in range(0, len(listOfcCDcCSWord)):
+        if listOfcCDcCSWord[i] == findWord:
+            flag = "True"
+            print("JJ-JQ word:"+findWord)
+            break
+        else:
+            flag = "N/F"
+
+    if flag == "True":
+        for i in range(sheet.nrows):
+            if findWord == sheet.cell_value(i, 0):
+                print(sheet.cell_value(i, 1))
+                value = sheet.cell_value(i, 1)
+    else:
+        value = 0
+
+    return value
