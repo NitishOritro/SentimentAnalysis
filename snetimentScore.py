@@ -70,19 +70,22 @@ for i in range(1,5):
                 #check in positive negative dataset
                 score = functionPython.LoadPositiveNegativeData(listOfPositiveWord, listOfNegativeWord, tokenizePostagger1[l][0])
                 if score == -999:
+                    score = 1
                     scoreNegCount = functionPython.CountNegativeData(listOfNegWord, tokenizePostagger1[l][0])
                     if scoreNegCount == "True":
                         scoreNegaWordCount = scoreNegaWordCount + 1
                     elif tokenizePostagger1[l][1] == 'conj':
                         value = tokenizePostagger1[l][0]
-                        scorecCDcCSWordScoreValue = functionPython.cCDcCSData(listOfcCDcCSWord, tokenizePostagger1[l][0])
+                        score = functionPython.cCDcCSData(listOfcCDcCSWord, tokenizePostagger1[l][0])
+                        #scorecCDcCSWordScoreValue = functionPython.cCDcCSData(listOfcCDcCSWord, tokenizePostagger1[l][0])
                     elif tokenizePostagger1[l][1] == 'adj' or  tokenizePostagger1[l][1] == 'adv':
                         value = tokenizePostagger1[l][0]
-                        scorecCDcCSWordScoreValue = functionPython.JJJQData(listOfJJJQCSWord, tokenizePostagger1[l][0])
-                else:
-                    scoreWord = scoreWord * score
+                        score = functionPython.JJJQData(listOfJJJQCSWord, tokenizePostagger1[l][0])
+                        #scorecCDcCSWordScoreValue = functionPython.JJJQData(listOfJJJQCSWord, tokenizePostagger1[l][0])
 
-        print("Neg count: " + str(scoreNegaWordCount))
+            scoreWord = scoreWord * score
+
+        #print("Neg count: " + str(scoreNegaWordCount))
         print("Result score: "+str(scoreWord))
         scoreWord = 1
     scoreNegaWordCount = 0
