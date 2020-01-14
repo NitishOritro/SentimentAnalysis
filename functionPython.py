@@ -69,7 +69,7 @@ def CountNegativeData(listOfNegWord, findWord):
         if listOfNegWord[i] == findWord:
             flag = "True"
             count = count+1
-            print("-Counted Negative - Word: " + str(count))
+            #print("-Counted Negative - Word: " + str(count))
             break
         else:
             flag = "N/F"
@@ -83,11 +83,13 @@ def LoadExcle(dataParameter):
 
     sheet.cell_value(0, 0)
 
-    listOfWord = []
-
+    listOfWord = [()]
+    dataValue = 0
     for i in range(sheet.nrows):
         data = sheet.cell_value(i, 0)
-        listOfWord.append(data)
+        dataValue = sheet.cell_value(i, 1)
+        #append(tuple([3, 4]))
+        listOfWord.append(tuple([data, dataValue]))
         # for j in range(0, len(data)):
 
     #print(listOfWord)
@@ -102,40 +104,33 @@ def cCDcCSData(listOfcCDcCSWord, findWord):
     value = 0
     index = 0
     for i in range(0, len(listOfcCDcCSWord)):
-        if listOfcCDcCSWord[i] == findWord:
+        if i !=0 and listOfcCDcCSWord[i][0] == findWord:
             flag = "True"
-            index = i
-            print("CCD-CCS word:"+findWord)
+
+            value = listOfcCDcCSWord[i][1]
+            print("CCD-CCS word:" + findWord+ " and Value is: "+ str(value))
             break
         else:
             flag = "N/F"
-
-    if flag == "True":
-        value = sheet.cell_value(index, 1)
-        #print(sheet.cell_value(i, 1))
-    else:
-        value = 1
+            value = 1
 
     return value
 
 def JJJQData(listOfcCDcCSWord, findWord):
     flag = ""
-    wb = xlrd.open_workbook("data/CCD-CCS/CCID.xlsx")
-    sheet = wb.sheet_by_index(0)
+
     value = 0
     index = 0
     for i in range(0, len(listOfcCDcCSWord)):
-        if listOfcCDcCSWord[i] == findWord:
-            index = i
+        if i !=0 and listOfcCDcCSWord[i][0] == findWord:
+            #index = i
             flag = "True"
-            print("JJ-JQ word:"+findWord)
+            value = listOfcCDcCSWord[i][1]
+            print("JJ-JQ word:"+findWord +" and Value is: "+ str(value))
+
             break
         else:
             flag = "N/F"
-
-    if flag == "True":
-        value = sheet.cell_value(index, 1)
-    else:
-        value = 1
+            value = 1
 
     return value

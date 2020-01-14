@@ -46,6 +46,10 @@ scoreWord = 1
 scoreNegaWordCount = 0
 scoreNegCount = "N/F"
 
+cordinatingConjuction = 0
+lengthOfExtract = 0
+totalScoreOfSentence = 0
+
 for i in range(1,5):
     data = sheet.cell_value(i, 1)
     for j in range(0, len(data)):
@@ -62,6 +66,21 @@ for i in range(1,5):
         extract = t.bn_word_tokenizer(listOfSentence[k])
         #print(extract)
         tokenizePostagger1 = posTagger.pos.posTagging(extract)
+
+        print("totral Length " + str(len(extract)))
+        lengthOfExtract = len(extract) / 2
+        for kk in range(0, len(extract)):
+            if tokenizePostagger1[kk][1] == 'conj':
+                print("conj " + str(kk))
+                for ll in range(0, len(listOfcCDcCSWord)):
+                    if ll != 0 and listOfcCDcCSWord[ll][0] == tokenizePostagger1[kk][0] and listOfcCDcCSWord[ll][1] == 1:
+                        if kk >= lengthOfExtract:
+                            cordinatingConjuction = kk
+                            print("actual conj " + str(kk))
+                            #print("conjunction word " + tokenizePostagger1[kk][0])
+                            #if tokenizePostagger1[kk][0]
+                            #print(listOfSentence[k])
+
         #print(tokenizePostagger1)
 
         for l in range(0, len(tokenizePostagger1)):
@@ -76,7 +95,10 @@ for i in range(1,5):
                         scoreNegaWordCount = scoreNegaWordCount + 1
                     elif tokenizePostagger1[l][1] == 'conj':
                         value = tokenizePostagger1[l][0]
-                        score = functionPython.cCDcCSData(listOfcCDcCSWord, tokenizePostagger1[l][0])
+                        if l == cordinatingConjuction:
+                            scoreWord = scoreWord * 2
+                        else:
+                            score = functionPython.cCDcCSData(listOfcCDcCSWord, tokenizePostagger1[l][0])
                         #scorecCDcCSWordScoreValue = functionPython.cCDcCSData(listOfcCDcCSWord, tokenizePostagger1[l][0])
                     elif tokenizePostagger1[l][1] == 'adj' or  tokenizePostagger1[l][1] == 'adv':
                         value = tokenizePostagger1[l][0]
@@ -86,10 +108,19 @@ for i in range(1,5):
             scoreWord = scoreWord * score
 
         #print("Neg count: " + str(scoreNegaWordCount))
+        print("total neg counted word "+ str(scoreNegaWordCount))
+        if scoreNegaWordCount%2 != 0:
+            scoreWord = scoreWord * (-1)
+
         print("Result score: "+str(scoreWord))
+        totalScoreOfSentence = totalScoreOfSentence + scoreWord
         scoreWord = 1
+
+    print("Total Score of a sentecne: " + str(totalScoreOfSentence))
+    totalScoreOfSentence = 0
     scoreNegaWordCount = 0
     listOfSentence = []
+
 
 
 """
