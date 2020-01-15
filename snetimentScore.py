@@ -2,6 +2,11 @@
 import functionPython
 import xlrd
 import posTagger
+
+import xlwt
+from xlwt import Workbook
+import openpyxl
+
 from bnltk.stemmer import BanglaStemmer
 from bnltk.tokenize import Tokenizers
 t = Tokenizers()
@@ -39,6 +44,7 @@ sheet.cell_value(0, 0)
 
 sentence = ""
 listOfSentence = []
+listOfSentenceScore = []
 value=""
 
 score = 1
@@ -117,10 +123,16 @@ for i in range(1,5):
         scoreWord = 1
 
     print("Total Score of a sentecne: " + str(totalScoreOfSentence))
+
+    #ADD Result in Excle
+    listOfSentenceScore.append(totalScoreOfSentence)
+
+
     totalScoreOfSentence = 0
     scoreNegaWordCount = 0
     listOfSentence = []
-
+functionPython.SaveData(listOfSentenceScore)
+print(listOfSentenceScore)
 
 
 """

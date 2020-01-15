@@ -1,5 +1,5 @@
 import xlrd
-
+import openpyxl
 
 # Function definition is here
 
@@ -134,3 +134,36 @@ def JJJQData(listOfcCDcCSWord, findWord):
             value = 1
 
     return value
+
+
+
+def SaveData(listOfSentenceScore):
+
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+
+    c1 = sheet.cell(row=1, column=1)
+    c1.value = listOfSentenceScore[0]
+    for i in range(1, len(listOfSentenceScore)):
+        c1 = sheet.cell(row=i+1, column=1)
+        c1.value = listOfSentenceScore[i]
+
+    wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\save.xlsx")
+    return "True"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
