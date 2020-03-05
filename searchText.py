@@ -36,3 +36,11 @@ for i in range(0, len(listOfWord)):
         break
     else:
         print("not found")
+
+questionMarkBN = "?"
+questionMarkEN = "?"
+
+word = "?"
+
+if word == questionMarkBN:
+    print("english bangla match")
