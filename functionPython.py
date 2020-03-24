@@ -40,7 +40,7 @@ def LoadPositiveNegativeData(listOfPositiveWord, listOfNegativeWord, findWord):
         if listOfPositiveWord[i] == findWord:
             flag = "true"
             score = 1
-            print("++++++ Word: "+findWord)
+            #print("++++++ Word: "+findWord)
             break
         else:
             flag = "N/F"
@@ -49,7 +49,7 @@ def LoadPositiveNegativeData(listOfPositiveWord, listOfNegativeWord, findWord):
             if listOfNegativeWord[i] == findWord:
                 flag = "true"
                 score = -1
-                print("------- Word: "+ findWord)
+                #print("------- Word: "+ findWord)
                 break
             else:
                 flag = "N/F"
@@ -108,7 +108,7 @@ def cCDcCSData(listOfcCDcCSWord, findWord):
             flag = "True"
 
             value = listOfcCDcCSWord[i][1]
-            print("CCD-CCS word:" + findWord+ " and Value is: "+ str(value))
+            #print("CCD-CCS word:" + findWord+ " and Value is: "+ str(value))
             break
         else:
             flag = "N/F"
@@ -126,7 +126,7 @@ def JJJQData(listOfcCDcCSWord, findWord):
             #index = i
             flag = "True"
             value = listOfcCDcCSWord[i][1]
-            print("JJ-JQ word:"+findWord +" and Value is: "+ str(value))
+            #print("JJ-JQ word:"+findWord +" and Value is: "+ str(value))
 
             break
         else:
@@ -152,11 +152,69 @@ def SaveData(listOfSentenceScore):
     return "True"
 
 
+def SaveModelData(IfIdf_matrix, tf_matrix):
+
+    wb = openpyxl.Workbook()
+    sheet = wb.active
+    #c1 = sheet.cell(row=1, column=1)
+    #c1.value = IfIdf_matrix[0][0]
+
+    #c2 = sheet.cell(row=1, column=2)
+    #c2.value = IfIdf_matrix[0][1]
+
+    counter = 1
+    for word in tf_matrix.keys():
+        c2 = sheet.cell(row=counter, column=1)
+        c2.value = word
+        counter = counter+1
+
+
+    for i in range(0, len(IfIdf_matrix)):
+        for j in range(0, len(IfIdf_matrix[i])):
+            #c2 = sheet.cell(row=i+1, column=1)
+            #c2.value = word
+
+            c1 = sheet.cell(row=i+1, column=j+2)
+            c1.value = IfIdf_matrix[i][j]
+
+
+
+        #c2 = sheet.cell(row=i + 1, column=2)
+        #c2.value = IfIdf_matrix[i][1]
+
+    wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\dataWordValue1.xlsx")
 
 
 
 
+def readFromExcle(loc):
 
+    sentence = ""
+    listOfSentence = []
+    listOfTotalSentence = []
+
+    wb = xlrd.open_workbook(loc)
+    sheet = wb.sheet_by_index(0)
+
+    sheet.cell_value(0, 0)
+
+    for i in range(1, 20):
+        data = sheet.cell_value(i, 1)
+        for j in range(0, len(data)):
+            lenData = len(data)
+            if j == len(data) - 1:
+                lenData = len(data)
+                sentence = sentence + data[j]
+                listOfSentence.append(sentence)
+                sentence = ""
+                break
+            else:
+                sentence = sentence + data[j]
+        # print(listOfSentence)
+        listOfTotalSentence.append(listOfSentence)
+        listOfSentence = []
+    return listOfTotalSentence
+    #print(listOfTotalSentence)
 
 
 

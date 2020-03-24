@@ -33,7 +33,7 @@ sentence = ""
 listOfSentence = []
 listOfTotalSentence = []
 
-for i in range(1,10):
+for i in range(1,20):
     data = sheet.cell_value(i, 2)
     for j in range(0, len(data)):
         lenData = len(data)

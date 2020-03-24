@@ -63,7 +63,11 @@ totalScoreOfSentenceQM = 0
 
 finalScoreofSentence = 0
 
-for i in range(1,7):
+forShowDataSentence = functionPython.readFromExcle(loc)
+
+counter = 0
+
+for i in range(1,20):
     data = sheet.cell_value(i, 1)
     for j in range(0, len(data)):
         if data[j] == fullStop:
@@ -79,20 +83,22 @@ for i in range(1,7):
 
     for QM in range(0, len(listOfSentenceQM)):
         if listOfSentenceQM[QM] != "":
-            print(listOfSentenceQM[QM])
+            #print(listOfSentenceQM[QM])
             extract = t.bn_word_tokenizer(listOfSentenceQM[QM])
-            print(extract)
+            #print(extract)
             tokenizePostagger1 = posTagger.pos.posTagging(extract)
             if tokenizePostagger1[len(extract)-1][1] == 'verb':
-                print(tokenizePostagger1[len(extract)-1][0]+" found verb")
+                #print(tokenizePostagger1[len(extract)-1][0]+" found verb")
                 scoreWordQM = -1
             else:
                 scoreWordQM = 0
                 listOfSentence.append(listOfSentenceQM[QM])
-            print("Result score: " + str(scoreWordQM))
+            #print("Result score: " + str(scoreWordQM))
             totalScoreOfSentenceQM = totalScoreOfSentenceQM + scoreWordQM
 
     print("Total Score of a QM sentecne: " + str(totalScoreOfSentenceQM))
+
+    #print(listOfSentence + listOfSentenceQM)
 
     listOfSentenceQM = []
 
@@ -102,16 +108,16 @@ for i in range(1,7):
             extract = t.bn_word_tokenizer(listOfSentence[k])
             tokenizePostagger1 = posTagger.pos.posTagging(extract)
 
-            print("totral Length " + str(len(extract)))
+            #print("totral Length " + str(len(extract)))
             lengthOfExtract = len(extract) / 2
             for kk in range(0, len(extract)):
                 if tokenizePostagger1[kk][1] == 'conj':
-                    print("conj " + str(kk))
+                    #print("conj " + str(kk))
                     for ll in range(0, len(listOfcCDcCSWord)):
                         if ll != 0 and listOfcCDcCSWord[ll][0] == tokenizePostagger1[kk][0] and listOfcCDcCSWord[ll][1] == 1:
                             if kk >= lengthOfExtract:
                                 cordinatingConjuction = kk
-                                print("actual conj " + str(kk))
+                                #print("actual conj " + str(kk))
 
             for l in range(0, len(tokenizePostagger1)):
                 value = tokenizePostagger1[l][0]
@@ -136,12 +142,17 @@ for i in range(1,7):
                             #scorecCDcCSWordScoreValue = functionPython.JJJQData(listOfJJJQCSWord, tokenizePostagger1[l][0])
                 scoreWord = scoreWord * score
             #print("Neg count: " + str(scoreNegaWordCount))
-            print("total neg counted word "+ str(scoreNegaWordCount))
+            #print("total neg counted word "+ str(scoreNegaWordCount))
             if scoreNegaWordCount%2 != 0:
                 scoreWord = scoreWord * (-1)
-            print("Result score: "+str(scoreWord))
+            #print("Result score: "+str(scoreWord))
         totalScoreOfSentence = totalScoreOfSentence + scoreWord
         scoreWord = 1
+
+        if len(forShowDataSentence) > counter:
+            print(forShowDataSentence[counter])
+            counter = counter +1
+
         print("Total Score of a sentecne: " + str(totalScoreOfSentence))
 
     finalScoreofSentence = totalScoreOfSentence + totalScoreOfSentenceQM
@@ -152,6 +163,7 @@ for i in range(1,7):
     totalScoreOfSentence = 0
     scoreNegaWordCount = 0
     listOfSentence = []
+
 functionPython.SaveData(listOfSentenceScore)
 print(listOfSentenceScore)
 
