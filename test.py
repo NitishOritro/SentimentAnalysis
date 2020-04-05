@@ -1,3 +1,26 @@
+import functionPython
+import posTagger
+from bnltk.stemmer import BanglaStemmer
+from bnltk.tokenize import Tokenizers
+t = Tokenizers()
+
+dataParameter = "data/positive-data/positive-word.txt"
+listOfPositiveWord = functionPython.LoadData(dataParameter)
+
+#print(listOfSentence)
+
+for i in range(0, len(listOfPositiveWord)):
+    count = 0
+    for j in range(0, len(listOfPositiveWord)):
+        if listOfPositiveWord[i] == listOfPositiveWord[j]: #and count <= 1:
+            count += 1
+    if count > 1:
+        print(listOfPositiveWord[i] + " vlue  " + str(count))
+
+
+
+
+"""
 
 from bnltk.stemmer import BanglaStemmer
 from bnltk.tokenize import Tokenizers
@@ -31,3 +54,5 @@ print(postText)
 sentences = 'রাজু চট্টগ্রাম বাংলাদেশী সুশীল খুব অবশ্যই তুমি আমি আপনি এবং ও কিন্তু অথচ বরং তবে তখন লিখেছিল এসেছিল পড়তে ঘুমায়'
 postText = p_tagger.tagger(sentences)
 print(postText)
+
+"""

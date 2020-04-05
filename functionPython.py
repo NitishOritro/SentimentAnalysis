@@ -148,7 +148,8 @@ def SaveData(listOfSentenceScore):
         c1 = sheet.cell(row=i+1, column=1)
         c1.value = listOfSentenceScore[i]
 
-    wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\save.xlsx")
+    #wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\save.xlsx")
+    wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\main-data\\save.xlsx")
     return "True"
 
 
@@ -182,8 +183,8 @@ def SaveModelData(IfIdf_matrix, tf_matrix):
         #c2 = sheet.cell(row=i + 1, column=2)
         #c2.value = IfIdf_matrix[i][1]
 
-    wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\dataWordValue1.xlsx")
-
+    #wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\dataWordValue1.xlsx")
+    wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\main-data\\dataWordValue1.xlsx")
 
 
 
