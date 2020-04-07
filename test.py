@@ -4,23 +4,62 @@ from bnltk.stemmer import BanglaStemmer
 from bnltk.tokenize import Tokenizers
 t = Tokenizers()
 
-dataParameter = "data/positive-data/positive-word.txt"
+dataParameter = "data/Lexicon Dictionary Data/Resturant/negative.txt"
 listOfPositiveWord = functionPython.LoadData(dataParameter)
 
 #print(listOfSentence)
 
-for i in range(0, len(listOfPositiveWord)):
-    count = 0
-    for j in range(0, len(listOfPositiveWord)):
-        if listOfPositiveWord[i] == listOfPositiveWord[j]: #and count <= 1:
-            count += 1
-    if count > 1:
-        print(listOfPositiveWord[i] + " vlue  " + str(count))
+listOfWordCheck = []
+
+import numpy as np
+
+
+print("numpy function code is:")
+
+
+x = np.array(listOfPositiveWord)
+arr = np.unique(x)
+
+listOfWordCheck = arr.tolist()
+
+for i in range(0, len(listOfWordCheck)):
+     print(listOfWordCheck[i])
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 """
+for i in range(0, len(listOfPositiveWord)):
+    count = 0
+    for j in range(0, len(listOfPositiveWord)):
+        if listOfPositiveWord[i] == listOfPositiveWord[j]: #and count <= 1:
+            count += 1
+            if count == 1:
+                listOfWordCheck.append(listOfPositiveWord[i])
+    #if count > 1:
+        #print(listOfPositiveWord[i] + " vlue  " + str(count))
+    if count == 1:
+        listOfWordCheck.append(listOfPositiveWord[i])
+
+
+print("my code is:")
+for i in range(0, len(listOfWordCheck)):
+     print(listOfWordCheck[i])
+
+
+
+
 
 from bnltk.stemmer import BanglaStemmer
 from bnltk.tokenize import Tokenizers
