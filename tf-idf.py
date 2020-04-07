@@ -5,7 +5,6 @@
 #Program Build a tf-IDF Model
 
 
-
 import functionPython
 from collections import Counter
 import xlrd
@@ -23,18 +22,30 @@ fullStop = "।"
 
 #Load Main Data
 
-loc = ("data/main-data/Cricket.xlsx")
+loc = ("data/main-data/Restaurant.xlsx")
 wb = xlrd.open_workbook(loc)
 sheet = wb.sheet_by_index(0)
 
 sheet.cell_value(0, 0)
 
+
+"""Load Dataset """
+
+dataParameter = "data/Lexicon Dictionary Data/Resturant/correctPositive.txt"
+listOfPositiveWord = functionPython.LoadData(dataParameter)
+dataParameter = "data/Lexicon Dictionary Data/Resturant/correctNegative.txt"
+listOfNegativeWord = functionPython.LoadData(dataParameter)
+
+listOfTotalWord = listOfPositiveWord + listOfNegativeWord
+
+
+
 sentence = ""
 listOfSentence = []
 listOfTotalSentence = []
 
-for i in range(1,20):
-    data = sheet.cell_value(i, 2)
+for i in range(1,2059):
+    data = sheet.cell_value(i, 1)
     for j in range(0, len(data)):
         lenData = len(data)
         if j == len(data)-1:
@@ -53,14 +64,17 @@ print(listOfTotalSentence)
 
 wordToCount = {}
 
+checkWord = ""
 for i in range(0, len(listOfTotalSentence)):
     extractToken = t.bn_word_tokenizer(listOfTotalSentence[i][0])
     #print(listOfTotalSentence[i])
     for word in extractToken:
-        if word not in wordToCount.keys():
-            wordToCount[word] = 1
-        else:
-            wordToCount[word] += 1
+        checkWord = functionPython.findWordFromList(listOfTotalWord, word)
+        if checkWord == "True":
+            if word not in wordToCount.keys():
+                wordToCount[word] = 1
+            else:
+                wordToCount[word] += 1
 
 #print(wordToCount)
 
@@ -72,7 +86,7 @@ for key, value in wordToCount.items():
     wordToList.append(temp)
 print(wordToList)
 
-"""
+
 wb = openpyxl.Workbook()
 sheet = wb.active
 
@@ -88,8 +102,9 @@ for i in range(1, len(wordToList)):
     c2 = sheet.cell(row=i + 1, column=2)
     c2.value = wordToList[i][1]
 
-wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\dataWord.xlsx")
-"""
+#wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\dataWord.xlsx")
+wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\dataWord.xlsx")
+
 
 #idf matrix
 
@@ -167,12 +182,10 @@ df = pd.DataFrame (X)
 
 ## save to xlsx file
 
-filepath = 'C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\TransPosedataValue.xlsx'
+#filepath = 'C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\TransPosedataValue.xlsx'
+filepath = 'C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\TransPosedataValue.xlsx'
 
 df.to_excel(filepath, index=False)
-
-
-
 
 
 """

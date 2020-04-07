@@ -219,9 +219,20 @@ def readFromExcle(loc):
 
 
 
+####Find a Word in a List###
 
+def findWordFromList(listOfTotalWord, find):
 
+    for i in range(0, len(listOfTotalWord)):
+        if listOfTotalWord[i] == find:
+            #print("found case match")
+            flag = "True"
+            break
+        else:
+            flag = "False"
+            #print("not found")
 
+    return flag
 
 
 
