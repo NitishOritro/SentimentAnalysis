@@ -4,9 +4,9 @@ Search a word in a file
 
 import functionPython
 
-dataParameter = "data/Lexicon Dictionary Data/Resturant/correctPositive.txt"
+dataParameter = "data/Lexicon Dictionary Data/Cricket/correctPositive.txt"
 listOfPositiveWord = functionPython.LoadData(dataParameter)
-dataParameter = "data/Lexicon Dictionary Data/Resturant/correctNegative.txt"
+dataParameter = "data/Lexicon Dictionary Data/Cricket/correctNegative.txt"
 listOfNegativeWord = functionPython.LoadData(dataParameter)
 
 listOfTotalWord = listOfPositiveWord + listOfNegativeWord

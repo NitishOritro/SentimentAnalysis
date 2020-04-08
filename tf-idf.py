@@ -71,6 +71,7 @@ for i in range(0, len(listOfTotalSentence)):
     for word in extractToken:
         checkWord = functionPython.findWordFromList(listOfTotalWord, word)
         if checkWord == "True":
+            checkWord = ""
             if word not in wordToCount.keys():
                 wordToCount[word] = 1
             else:
