@@ -11,19 +11,21 @@ listOfNegativeWord = functionPython.LoadData(dataParameter)
 
 listOfTotalWord = listOfPositiveWord + listOfNegativeWord
 
-
-
 #find a word
 find = "অংশগুলির"
-for i in range(0, len(listOfTotalWord)):
-    if listOfTotalWord[i] == find:
-        print("found case match")
-        break
-    else:
-        print("not found")
+print("Positive found case match")
+for i in range(0, len(listOfPositiveWord)):
+    for j in range(0, len(listOfNegativeWord)):
+        if listOfPositiveWord[i] == listOfNegativeWord[j]:
+            print(listOfPositiveWord[i])
+            break
 
-
-
+print("Negative found case match")
+for i in range(0, len(listOfNegativeWord)):
+    for j in range(0, len(listOfPositiveWord)):
+        if listOfNegativeWord[i] == listOfPositiveWord[j]:
+            print(listOfNegativeWord[i])
+            break
 
 """
 
