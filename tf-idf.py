@@ -31,20 +31,21 @@ sheet.cell_value(0, 0)
 
 """Load Dataset """
 
-dataParameter = "data/Lexicon Dictionary Data/Resturant/correctPositive.txt"
+dataParameter = "data/Lexicon Dictionary Data/Restaurant/correctNegative.txt"
 listOfPositiveWord = functionPython.LoadData(dataParameter)
-dataParameter = "data/Lexicon Dictionary Data/Resturant/correctNegative.txt"
+dataParameter = "data/Lexicon Dictionary Data/Restaurant/correctPositive.txt"
 listOfNegativeWord = functionPython.LoadData(dataParameter)
 
-listOfTotalWord = listOfPositiveWord + listOfNegativeWord
+listOfStopWord = functionPython.LoadData("data/stop-word/stopWordModel.txt")
 
+listOfTotalWord = listOfPositiveWord + listOfNegativeWord
 
 
 sentence = ""
 listOfSentence = []
 listOfTotalSentence = []
 
-for i in range(1,2059):
+for i in range(1,3):
     data = sheet.cell_value(i, 1)
     for j in range(0, len(data)):
         lenData = len(data)
@@ -69,15 +70,16 @@ for i in range(0, len(listOfTotalSentence)):
     extractToken = t.bn_word_tokenizer(listOfTotalSentence[i][0])
     #print(listOfTotalSentence[i])
     for word in extractToken:
-        checkWord = functionPython.findWordFromList(listOfTotalWord, word)
-        if checkWord == "True":
+        checkWord = functionPython.findWordFromList(listOfStopWord, word)
+        if checkWord == "False":
             checkWord = ""
             if word not in wordToCount.keys():
                 wordToCount[word] = 1
             else:
                 wordToCount[word] += 1
 
-#print(wordToCount)
+
+print(wordToCount)
 
 #print(wordToCount.items())
 wordToList = []
@@ -87,26 +89,28 @@ for key, value in wordToCount.items():
     wordToList.append(temp)
 print(wordToList)
 
+wordToListCheck = sorted(wordToList, key=lambda x: x[1], reverse=True)
 
+"""
 wb = openpyxl.Workbook()
 sheet = wb.active
 
 c1 = sheet.cell(row=1, column=1)
-c1.value = wordToList[0][0]
+c1.value = wordToListCheck[0][0]
 
 c2 = sheet.cell(row=1, column=2)
-c2.value = wordToList[0][1]
+c2.value = wordToListCheck[0][1]
 for i in range(1, len(wordToList)):
     c1 = sheet.cell(row=i+1, column=1)
-    c1.value = wordToList[i][0]
+    c1.value = wordToListCheck[i][0]
 
     c2 = sheet.cell(row=i + 1, column=2)
-    c2.value = wordToList[i][1]
+    c2.value = wordToListCheck[i][1]
 
 #wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\dataWord.xlsx")
-wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\dataWord.xlsx")
+wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\dataWordRestaurant.xlsx")
 
-
+"""
 #idf matrix
 
 word_idfs = {}
@@ -121,7 +125,9 @@ wordToCount = (sorted(wordToCount.items(), key=lambda x: x[1], reverse=True))
 k = Counter(wordToCount)
 
 # Finding 3 highest values
-wordToCountFre = k.most_common(10)
+wordToCountFre = k.most_common(50)
+
+print(wordToCountFre)
 
 print(wordToCountFre)
 
@@ -149,12 +155,6 @@ for word in wordToCountFre:
         doc_tf.append(tf_word)
     tf_matrix[word[0][0]] = doc_tf
 
-
-#print(tf_matrix)
-
-print(tf_matrix.keys())
-print(tf_matrix)
-
 #TF-IDF Calculation
 tfIdf_matrix = []
 for word in tf_matrix.keys():
@@ -164,7 +164,7 @@ for word in tf_matrix.keys():
         tfidf.append(score)
     tfIdf_matrix.append(tfidf)
 
-#print(tfIdf_matrix)
+print(tfIdf_matrix)
 
 
 functionPython.SaveModelData(tfIdf_matrix, tf_matrix)
@@ -184,9 +184,33 @@ df = pd.DataFrame (X)
 ## save to xlsx file
 
 #filepath = 'C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\TransPosedataValue.xlsx'
-filepath = 'C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\TransPosedataValue.xlsx'
+filepath = 'C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\TransPosedataValueRestaurant.xlsx'
 
 df.to_excel(filepath, index=False)
+
+
+####### Create an Dependent Variable ########
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 """

@@ -24,6 +24,7 @@ def LoadData(dataParameter):
             else:
                 sentence = sentence + data[i]
         else:
+            listOfWord.append(sentence)
             break
 
     return listOfWord
@@ -149,7 +150,7 @@ def SaveData(listOfSentenceScore):
         c1.value = listOfSentenceScore[i]
 
     #wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\save.xlsx")
-    wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\main-data\\save.xlsx")
+    wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\main-data\\saveNew.xlsx")
     return "True"
 
 
@@ -199,7 +200,7 @@ def readFromExcle(loc):
 
     sheet.cell_value(0, 0)
 
-    for i in range(1, 20):
+    for i in range(1,2060):
         data = sheet.cell_value(i, 1)
         for j in range(0, len(data)):
             lenData = len(data)
@@ -214,8 +215,9 @@ def readFromExcle(loc):
         # print(listOfSentence)
         listOfTotalSentence.append(listOfSentence)
         listOfSentence = []
-    return listOfTotalSentence
     #print(listOfTotalSentence)
+    return listOfTotalSentence
+
 
 
 

@@ -206,4 +206,4 @@ class Stemmer:
                 return stemmWord
         return s
 
-print(Stemmer().wordStem("স্বাধীনতার"))
+print(Stemmer().wordStem("খেলোয়াড়দের"))

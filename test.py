@@ -1,14 +1,83 @@
 import functionPython
 import posTagger
 from bnltk.stemmer import BanglaStemmer
+import pandas as pd
+import xlrd
+import openpyxl
+
+
 from bnltk.tokenize import Tokenizers
 t = Tokenizers()
 
-dataParameter = "data/Lexicon Dictionary Data/Resturant/negative.txt"
-listOfPositiveWord = functionPython.LoadData(dataParameter)
+excel_file = "data/main-data/Restaurant.xlsx"
+#listOfPositiveWord = functionPython.LoadData(dataParameter)
 
 #print(listOfSentence)
 
+#listOfNuetralData = functionPython.LoadExcle(loc)
+
+#listOfNuetral = [list(ele) for ele in listOfNuetralData]
+loc = "data/Lexicon Dictionary Data/Cricket/neutral.txt"
+
+dataParameter = "data/Lexicon Dictionary Data/Cricket/correctPositive.txt"
+listOfPositiveWord = functionPython.LoadData(dataParameter)
+dataParameter = "data/Lexicon Dictionary Data/Cricket/correctNegative.txt"
+listOfNegativeWord = functionPython.LoadData(dataParameter)
+
+#print(listOfNegativeWord)
+listOfNuetralData = functionPython.LoadData(loc)
+
+listOfTotalWord = listOfPositiveWord + listOfNegativeWord
+
+
+newList = []
+for i in range(0, len(listOfNuetralData)):
+    for j in range(0, len(listOfTotalWord)):
+        a = listOfNuetralData[i]
+        b = listOfTotalWord[j]
+
+        if a != b:
+            flag = "true"
+        else:
+            flag = "false"
+            break
+    if flag == "true":
+        newList.append(listOfNuetralData[i])
+        flag = "false"
+
+
+for i in range(0, len(newList)):
+    print(newList[i])
+
+
+#for i in range(0, len(listOfTotalSentence)):
+#    print(listOfTotalSentence[i])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 listOfWordCheck = []
 
 import numpy as np
@@ -24,6 +93,8 @@ listOfWordCheck = arr.tolist()
 
 for i in range(0, len(listOfWordCheck)):
      print(listOfWordCheck[i])
+
+"""
 
 
 
