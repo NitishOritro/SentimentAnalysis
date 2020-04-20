@@ -90,7 +90,7 @@ n = 2
 # Our N-Grams
 ngrams = {}
 
-###### Term Frequency(TF) calculation in wordToCount (No. of words in a doc)
+###### Term Frequency(TF) calculation in wordToCount (No. of words in a doc) ######
 
 
 wordToCount = {}
@@ -112,6 +112,7 @@ wordToCountInDOC = {}
 for i in range(0, len(listOfTotalSentence)):
     doc = listOfTotalSentence[i][0]
     extractToken = t.bn_word_tokenizer(listOfTotalSentence[i][0])
+    sentence = ""
     for wi in range(len(extractToken)):
         sentence = sentence+" "+extractToken[wi]
     for word in wordToCount:
@@ -142,6 +143,7 @@ word_idfs1 = {}
 word_idfs2 = {}
 NoOfDocuments = len(listOfTotalSentence)
 
+"""
 for word in wordToCountFre:
     doc_count = 0
     for data in listOfTotalSentence:
@@ -154,21 +156,47 @@ for word in wordToCountFre:
     word_idfs1[word[0][0]] = np.log((NoOfDocuments / doc_count) + 1)
     #print(str(doc_count)+" "+str(word[0]))
 print(word_idfs1)
+"""
 
 for word in wordToCountFreInDoc:
     doc_count = word[0][1]
-    word_idfs2[word[0][0]] = np.log(NoOfDocuments / (1+doc_count))
+    word_idfs2[word[0][0]] = np.log((NoOfDocuments / doc_count) + 1)
 
 print(word_idfs2)
 
+###### Term Frequency(TF) Calculation ######
+
+tf_matrix = {}
+for word in wordToCountFre:
+    doc_tf = []
+    for i in range(0, len(listOfTotalSentence)):
+        frequency = 0
+        extractToken = t.bn_word_tokenizer(listOfTotalSentence[i][0])
+        for j in range(len(extractToken)+1 - n):
+            wordGram = ' '.join(extractToken[j:j + n])
+            if word[0][0] in wordGram:
+                frequency += 1
+        tf_word = frequency / (len(extractToken)-1)
+        doc_tf.append(tf_word)
+    tf_matrix[word[0][0]] = doc_tf
 
 
+print("Term Frequency Matrix")
+print(tf_matrix)
 
 
+########### TF-IDF Calculation #############
 
+tfIdf_matrix = []
+for word in tf_matrix.keys():
+    tfidf = []
+    for tf in tf_matrix[word]:
+        score = tf * word_idfs2[word]
+        tfidf.append(score)
+    tfIdf_matrix.append(tfidf)
 
-
-
+for i in range(0, len(tfIdf_matrix)):
+    print(tfIdf_matrix[i])
 
 
 
