@@ -81,8 +81,7 @@ wordToCount = {}
 
 checkWord = ""
 for i in range(0, len(listOfTotalSentence)):
-    extractToken = t.bn_word_tokenizer(listOfTotalSentence[i][0])
-    extractToken = checkStopWordGram(extractToken)
+    extractToken = checkStopWordGram(t.bn_word_tokenizer(listOfTotalSentence[i][0]))
     for i in range(len(extractToken)+1 - n):
         wordGram = ' '.join(extractToken[i:i + n])
         if wordGram not in wordToCount.keys():
@@ -96,8 +95,7 @@ wordToCountInDOC = {}
 
 for i in range(0, len(listOfTotalSentence)):
     doc = listOfTotalSentence[i][0]
-    extractToken = t.bn_word_tokenizer(listOfTotalSentence[i][0])
-    extractToken = checkStopWordGram(extractToken)
+    extractToken = checkStopWordGram(t.bn_word_tokenizer(listOfTotalSentence[i][0]))
     sentence = ""
     for wi in range(len(extractToken)):
         sentence = sentence+" "+extractToken[wi]
@@ -148,8 +146,7 @@ for word in wordToCountFre:
     doc_tf = []
     for i in range(0, len(listOfTotalSentence)):
         frequency = 0
-        extractToken = t.bn_word_tokenizer(listOfTotalSentence[i][0])
-        extractToken = checkStopWordGram(extractToken)
+        extractToken = checkStopWordGram(t.bn_word_tokenizer(listOfTotalSentence[i][0]))
         for j in range(len(extractToken)+1 - n):
             wordGram = ' '.join(extractToken[j:j + n])
             if word[0][0] in wordGram:

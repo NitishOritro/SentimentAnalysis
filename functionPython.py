@@ -185,7 +185,7 @@ def SaveModelData(IfIdf_matrix, tf_matrix):
         #c2.value = IfIdf_matrix[i][1]
 
     #wb.save("C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\dataWordValue1.xlsx")
-    wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\main-data\\dataWordValue1.xlsx")
+    wb.save("C:\\PycharmProjects\\SentimentAnalysis\\data\main-data\\dataWordValueBiGram.xlsx")
 
 
 

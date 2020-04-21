@@ -1,8 +1,3 @@
-
-
-
-
-
 import random
 import nltk
 from collections import Counter
@@ -27,7 +22,7 @@ fullStop = "।"
 
 #Load Main Data
 
-loc = ("data/main-data/Restaurant_Test.xlsx")
+loc = ("data/main-data/Restaurant.xlsx")
 wb = xlrd.open_workbook(loc)
 sheet = wb.sheet_by_index(0)
 
@@ -46,52 +41,50 @@ listOfStopWord = functionPython.LoadData("data/stop-word/stopWordModel.txt")
 listOfTotalWord = listOfPositiveWord + listOfNegativeWord
 
 
+def checkStopWordGram(extractToken):
+    newExtractToken = []
+    for wordExtract in extractToken:
+        checkWord = functionPython.findWordFromList(listOfStopWord, wordExtract)
+        if checkWord == "False":
+            newExtractToken.append(wordExtract)
+
+    return newExtractToken
+
+def removeStopWord(Sentence):
+    sentence = ""
+    extractToken = checkStopWordGram(t.bn_word_tokenizer(Sentence))
+    for wi in range(len(extractToken)):
+        sentence = sentence+" "+extractToken[wi]
+    return sentence
+
+
 sentence = ""
 listOfSentence = []
 listOfTotalSentence = []
 
-for i in range(1,4):
+for i in range(1,2060):
     data = sheet.cell_value(i, 1)
     for j in range(0, len(data)):
         lenData = len(data)
         if j == len(data)-1:
             lenData = len(data)
             sentence = sentence + data[j]
-            listOfSentence.append(sentence)
+            listOfSentence.append(removeStopWord(sentence))
             sentence = ""
             break
         else:
             sentence = sentence + data[j]
-    #print(listOfSentence)
+
     listOfTotalSentence.append(listOfSentence)
     listOfSentence = []
-#print(listOfTotalSentence)
+print(listOfTotalSentence)
 
 # Building the model
-#words = nltk.word_tokenize(text)
-
-def wordGram(extractToken):
-
-    for i in range(len(extractToken) - n):
-        gram = ' '.join(extractToken[i:i + n])
-        print(gram)
-        if gram not in ngrams.keys():
-            ngrams[gram] = 1
-        else:
-            ngrams[gram] += 1
-        # ngrams[gram].append(words[i+n])
-    wordToCount = (sorted(ngrams.items(), key=lambda x: x[1], reverse=True))
-    print(wordToCount)
-
-# Sample data
-text = "জয় বাংলা কাপ! স্বাধীনতার মাস মার্চে। জয় বাংলা কাপ!! তাও আবার স্বাধীনতার মাস মার্চে।"
 # Order of the grams
 n = 2
 # Our N-Grams
 ngrams = {}
-
 ###### Term Frequency(TF) calculation in wordToCount (No. of words in a doc) ######
-
 
 wordToCount = {}
 
@@ -123,46 +116,30 @@ for i in range(0, len(listOfTotalSentence)):
                 wordToCountInDOC[word] += 1
 
 
-#print(wordToCountInDOC)
-print("wordToCountINDOC list ")
+#print("wordToCountINDOC list ")
 wordToCountINDOC = (sorted(wordToCountInDOC.items(), key=lambda x: x[1], reverse=True))
 k = Counter(wordToCountINDOC)
-# Finding 3 highest values
-wordToCountFreInDoc = k.most_common(20)
-print(wordToCountFreInDoc)
 
-print("wordToCountFre list ")
-wordToCountFRE = (sorted(wordToCount.items(), key=lambda x: x[1], reverse=True))
-k = Counter(wordToCountFRE)
-# Finding 3 highest values
-wordToCountFre = k.most_common(20)
-print(wordToCountFre)
+wordToCountFreInDoc = k.most_common(6675)
+#print(wordToCountFreInDoc)
 
+#print("wordToCountFre list ")
+wordToCountTEST = (sorted(wordToCount.items(), key=lambda x: x[1], reverse=True))
+k = Counter(wordToCountTEST)
+
+wordToCountFre = k.most_common(6675)
+#print(wordToCountFre)
 
 word_idfs1 = {}
 word_idfs2 = {}
 NoOfDocuments = len(listOfTotalSentence)
 
-"""
-for word in wordToCountFre:
-    doc_count = 0
-    for data in listOfTotalSentence:
-        extractToken = t.bn_word_tokenizer(data[0])  #extracttoken is a list
-        #sentenceWordGram = wordGram(extractToken)
-        for i in range(len(extractToken)+1 - n):
-            wordGram = ' '.join(extractToken[i:i + n])
-            if word[0][0] in wordGram:                                     #Word is tupple
-                doc_count += 1
-    word_idfs1[word[0][0]] = np.log((NoOfDocuments / doc_count) + 1)
-    #print(str(doc_count)+" "+str(word[0]))
-print(word_idfs1)
-"""
 
 for word in wordToCountFreInDoc:
     doc_count = word[0][1]
     word_idfs2[word[0][0]] = np.log((NoOfDocuments / doc_count) + 1)
 
-print(word_idfs2)
+#print(word_idfs2)
 
 ###### Term Frequency(TF) Calculation ######
 
@@ -176,7 +153,10 @@ for word in wordToCountFre:
             wordGram = ' '.join(extractToken[j:j + n])
             if word[0][0] in wordGram:
                 frequency += 1
-        tf_word = frequency / (len(extractToken)-1)
+        if len(extractToken) == 0 or len(extractToken) == 1:
+            tf_word = 0
+        else:
+            tf_word = frequency / (len(extractToken)-1)
         doc_tf.append(tf_word)
     tf_matrix[word[0][0]] = doc_tf
 
@@ -195,37 +175,26 @@ for word in tf_matrix.keys():
         tfidf.append(score)
     tfIdf_matrix.append(tfidf)
 
-for i in range(0, len(tfIdf_matrix)):
-    print(tfIdf_matrix[i])
+#for i in range(0, len(tfIdf_matrix)):
+    #print(tfIdf_matrix[i])
+
+functionPython.SaveModelData(tfIdf_matrix, tf_matrix)
 
 
+X = np.asarray(tfIdf_matrix)
 
+X = np.transpose(X)
 
+print(X)
 
+import pandas as pd
 
+## convert your array into a dataframe
+df = pd.DataFrame (X)
 
+## save to xlsx file
 
+#filepath = 'C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\TransPosedataValue.xlsx'
+filepath = 'C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\BiGramTransPoseDataRestaurant.xlsx'
 
-
-
-
-
-
-
-
-
-
-"""
-extractToken = t.bn_word_tokenizer(text)
-
-for i in range(len(extractToken)-n):
-    gram = ' '.join(extractToken[i:i+n])
-    print(gram)
-    if gram not in ngrams.keys():
-        ngrams[gram] = 1
-    else:
-        ngrams[gram] += 1
-    #ngrams[gram].append(words[i+n])
-
-print(ngrams)
-"""
+df.to_excel(filepath, index=False)
