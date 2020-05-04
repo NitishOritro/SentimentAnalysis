@@ -128,7 +128,7 @@ wordToCountTEST = (sorted(wordToCount.items(), key=lambda x: x[1], reverse=True)
 k = Counter(wordToCountTEST)
 
 wordToCountFre = k.most_common(6675)
-#print(wordToCountFre)
+print(wordToCountFre)
 
 word_idfs1 = {}
 word_idfs2 = {}
@@ -139,7 +139,8 @@ for word in wordToCountFreInDoc:
     doc_count = word[0][1]
     word_idfs2[word[0][0]] = np.log((NoOfDocuments / doc_count) + 1)
 
-#print(word_idfs2)
+print("word_idfs2")
+print(word_idfs2)
 
 ###### Term Frequency(TF) Calculation ######
 
@@ -162,7 +163,7 @@ for word in wordToCountFre:
 
 
 print("Term Frequency Matrix")
-print(tf_matrix)
+#print(tf_matrix)
 
 
 ########### TF-IDF Calculation #############
@@ -178,14 +179,17 @@ for word in tf_matrix.keys():
 #for i in range(0, len(tfIdf_matrix)):
     #print(tfIdf_matrix[i])
 
-functionPython.SaveModelData(tfIdf_matrix, tf_matrix)
+print("########### TF-IDF Calculation ############# Done")
 
+#functionPython.SaveModelData(tfIdf_matrix, tf_matrix)
+
+#print("now done functionPython SaveModelData")
 
 X = np.asarray(tfIdf_matrix)
 
 X = np.transpose(X)
 
-print(X)
+#print(X)
 
 import pandas as pd
 
@@ -193,8 +197,11 @@ import pandas as pd
 df = pd.DataFrame (X)
 
 ## save to xlsx file
+print("saving pandas as pd  to xlsx file")
 
 #filepath = 'C:\\Users\\ICB_AP\\PycharmProjects\\banglaText\\data\\main-data\\TransPosedataValue.xlsx'
 filepath = 'C:\\PycharmProjects\\SentimentAnalysis\\data\\main-data\\BiGramTransPoseDataRestaurant.xlsx'
+
+print("saving ......")
 
 df.to_excel(filepath, index=False)
