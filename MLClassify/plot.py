@@ -23,7 +23,7 @@ def plotCM(cm):
     # labels, title and ticks
     ax.set_xlabel('Predicted labels');
     ax.set_ylabel('True labels'); 
-    ax.set_title('CM For Bigram in Our Proposed Approach'); 
+    ax.set_title('Confusion Matrix for Cricket Data'); 
     ax.xaxis.set_ticklabels(['Negative', 'Neutral','Positive']); ax.yaxis.set_ticklabels(['Negative', 'Neutral','Positive']);
     plt.xlabel('Predicted label\naccuracy={:0.2f}%; misclass={:0.2f}%'.format(accuracy, misclass))
 
@@ -38,6 +38,13 @@ cmTest = [[367, 2, 20],
        [20, 9, 12],
        [68, 5, 93]]
 
+
+cmTestRestaurantUnigram = [[58, 3, 62],
+                           [2, 4, 6],
+                           [16, 2, 259]]
+
+
+
 cmTestRestaurantBigram = [[61, 4, 58],
                           [1, 6, 5],
                           [9, 3, 265]]
@@ -46,7 +53,7 @@ cmTestCricketBigram = [[372, 3, 14],
                        [16, 15, 10],
                        [59, 4, 103]]
 
-plotCM(cmTestCricketBigram)
+plotCM(cmTest)
 
 
 

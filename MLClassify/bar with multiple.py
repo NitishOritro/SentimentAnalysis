@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Thu May  7 13:05:01 2020
+
+@author: Nitish Ranjan
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Wed May  6 22:13:03 2020
 
 @author: Nitish Ranjan
@@ -10,21 +17,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-labels = ['SVM', 'Logistic \n Regresiion', 'KNN', 'Random Forest']
+labels = ['Unigram Restaurant', 'Bigram Restaurant', 'Unigram Cricket', 'Unigram Cricket']
 #men_means = [77.91, 70.41 , 69.41, 67.23]
 #women_means = [78.61, 67.07, 66.13, 45.21]
 
-men_means = [78.69, 72.81 , 63.25, 65.26]
-#women_means = [80, 70.36, 56.60, 42.59]
+men_means = [77.91, 80.58, 78.69, 82.21]
+women_means = [78.61, 81.26, 80.00, 81.64]
 
 x = np.arange(len(labels))
   # the label locations
 print(x)
 width = 0.35  # the width of the bars
 
-fig, ax = plt.subplots()
+#fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(10,5))
 rects1 = ax.bar(x - width/2, men_means, width, label='Accuracy')
-#rects2 = ax.bar(x + width/2, women_means, width, label='Precision')
+print
+rects2 = ax.bar(x + width/2, women_means, width, label='Precision')
 
 # Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_xlabel('Classification Algorithm')
@@ -42,7 +51,7 @@ def autolabel(rects):
         print(height)
         ax.annotate('{}'.format(height),
                     xy=(rect.get_x() + rect.get_width() / 2, height),
-                    xytext=(0, 0.5),  # 3 points vertical offset
+                    xytext=(0, 3),  # 3 points vertical offset
                     textcoords="offset points",
                     ha='center', va='bottom')
 
@@ -52,18 +61,14 @@ autolabel(rects2)
 
 fig.tight_layout()
 
+
+# Setting the x-axis and y-axis limits
+#plt.xlim(1, 5)
+plt.ylim([0, 120] )
+
+
 plt.show()
 
 
 
-import numpy as np
-import pandas as pd
-from pandas import Series, DataFrame
-import matplotlib.pyplot as plt
 
-data1 = [23,85, 72, 43, 52]
-data2 = [42, 35, 21, 16, 9]
-width =0.3
-plt.bar(np.arange(len(data1)), data1, width=width)
-plt.bar(np.arange(len(data2))+ width, data2, width=width)
-plt.show()
